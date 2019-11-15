@@ -11,6 +11,12 @@ export default class Instruction3 extends Component {
   static navigationOptions = {
     header: null
   };
+
+  endTutorial = async () => {
+    await AsyncStorage.setItem('firstTime', 'no');
+    this.props.navigation.navigate('Auth');
+  };
+
   render() {
     return (
       <View style={Styles.container_intro}>
@@ -28,7 +34,7 @@ export default class Instruction3 extends Component {
           position='center'
           icon={<Icon name='md-checkmark' style={Styles.actionButtonIcon} />}
           onPress={() => {
-            this.props.navigation.navigate('Instruction1');
+            this.endTutorial();
           }}
         ></ActionButton>
       </View>

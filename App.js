@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Root } from 'native-base';
 
 import AppContainer from './components/navigation/Main';
 
@@ -9,6 +10,10 @@ export default class App extends Component {
   }
 
   render() {
-    return <AppContainer />;
+    return (
+      <Root>
+        <AppContainer />
+      </Root>
+    );
   }
 }
