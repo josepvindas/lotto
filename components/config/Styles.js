@@ -34,19 +34,31 @@ export default Styles = StyleSheet.create({
     backgroundColor: Colors.primary_light,
     borderColor: Colors.primary,
     borderRadius: 15,
-    borderWidth: 2,
-    maxHeight: Math.round(Dimensions.get('window').width) * 0.6,
-    maxWidth: Math.round(Dimensions.get('window').width) * 0.45,
-    minHeight: Math.round(Dimensions.get('window').width) * 0.6,
-    minWidth: Math.round(Dimensions.get('window').width) * 0.45,
-    margin: 10
+    borderWidth: 1,
+    width: Math.round(Dimensions.get('window').width) * 0.95,
+    margin: 5,
+    padding: 10
   },
 
-  card_list: {
-    alignItems: 'center',
-    flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap'
+  card_title: {
+    color: Colors.primary,
+    fontSize: 25,
+    marginBottom: 10,
+    marginTop: 10
+  },
+
+  card_body: {
+    color: Colors.primary_dark,
+    fontSize: 15,
+    marginBottom: 5
+  },
+
+  card_play: {
+    color: Colors.primary,
+    fontSize: 20,
+    position: 'absolute',
+    bottom: 10,
+    right: 10
   },
 
   container: {
@@ -110,6 +122,50 @@ export default Styles = StyleSheet.create({
     textAlign: 'center'
   },
 
+  modal: {
+    justifyContent: 'flex-start',
+    borderRadius: 25,
+    height: Math.round(Dimensions.get('window').height) * 0.5,
+    shadowRadius: 10,
+    width: Math.round(Dimensions.get('window').width) * 0.85
+  },
+
+  modal_body: {
+    margin: 20
+  },
+
+  modal_button: {
+    color: Colors.primary_light,
+    fontSize: 20,
+    height: 22
+  },
+
+  modal_input: {
+    alignSelf: 'center',
+    backgroundColor: 'rgba(0,0,0,0.2)',
+    borderRadius: 6,
+    color: '#000',
+    height: 40,
+    width: Math.round(Dimensions.get('window').width) * 0.85 * 0.9,
+    marginBottom: 10,
+    paddingHorizontal: 10
+  },
+
+  modal_text: {
+    color: Colors.primary_dark,
+    fontSize: 18,
+    marginBottom: 5
+  },
+
+  modal_title: {
+    color: Colors.primary,
+    fontSize: 25,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    marginBottom: 20
+  },
+
   primary_text: {
     color: Colors.primary,
     fontSize: 15,
@@ -133,6 +189,6 @@ export default Styles = StyleSheet.create({
   },
   scroll: {
     width: Math.round(Dimensions.get('window').width),
-    alignItems: 'stretch'
+    alignItems: 'center'
   }
 });

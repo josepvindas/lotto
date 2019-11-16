@@ -3,7 +3,8 @@ const Colors = {
   primary_light: '#FFFFFC',
   primary_medium: '#E3E3E3',
   primary: '#FE0000',
-  primary_bak: '#FE0000'
+  success: '#00b300',
+  danger: '#b32d00'
 };
 
 export default Colors;

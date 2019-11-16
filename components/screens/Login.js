@@ -67,8 +67,9 @@ export default class Login extends Component {
           );
         } else {
           const token = responseJson.jwt;
-          this._storeData(token);
-          this.props.navigation.navigate('App');
+          this._storeData(token).then(() => {
+            this.props.navigation.navigate('App');
+          });
         }
       })
       .catch(err => {

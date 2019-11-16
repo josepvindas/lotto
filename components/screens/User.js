@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Image, View, Text } from 'react-native';
+import { View, Text } from 'react-native';
+import { Header } from 'react-native-elements';
 
 import Styles from '../config/Styles';
 import Strings from '../config/Strings';
@@ -10,9 +11,18 @@ export default class Settings extends Component {
   };
   render() {
     return (
-      <View style={Styles.container}>
-        <Text style={Styles.title}> CONFIGURACIONES </Text>
-      </View>
+      <>
+        <Header
+          centerComponent={{
+            text: Strings.signup_title,
+            style: Styles.title_intro
+          }}
+          containerStyle={Styles.header}
+        />
+        <View style={Styles.container}>
+          <Text style={Styles.title}> CONFIGURACIONES </Text>
+        </View>
+      </>
     );
   }
 }
