@@ -48,13 +48,8 @@ export default class Login extends Component {
   signup = () => {
     if (this.state.password != this.state.confirm) {
       console.log('Error');
-      ToastAndroid.showWithGravityAndOffset(
-        Strings.mismatch_error,
-        ToastAndroid.LONG,
-        ToastAndroid.TOP,
-        25,
-        50
-      );
+      console.log('Error');
+      alert(Strings.mismatch_error);
     } else {
       const uri = 'https://lotto-back.herokuapp.com' + '/auth/local/register';
       return fetch(uri, {
@@ -75,13 +70,14 @@ export default class Login extends Component {
         .then(responseJson => {
           if (responseJson.error) {
             console.log('Error');
-            ToastAndroid.showWithGravityAndOffset(
+            /*    ToastAndroid.showWithGravityAndOffset(
               Strings.credential_error,
               ToastAndroid.LONG,
               ToastAndroid.TOP,
               25,
               50
-            );
+            );*/
+            alert(Strings.credential_error);
           } else {
             const token = responseJson.jwt;
 

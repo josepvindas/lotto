@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
 import {
-  View,
-  Text,
-  ScrollView,
-  RefreshControl,
   ActivityIndicator,
-  ToastAndroid,
   AsyncStorage,
-  TouchableOpacity
+  RefreshControl,
+  ScrollView,
+  Text,
+  ToastAndroid,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { Header } from 'react-native-elements';
 
-import Styles from '../config/Styles';
-import Strings from '../config/Strings';
-
 import GameModal from '../modals/GameModal';
+import Strings from '../config/Strings';
+import Styles from '../config/Styles';
 
 export default class Dashboard extends Component {
   static navigationOptions = {
@@ -33,6 +32,7 @@ export default class Dashboard extends Component {
     };
   }
 
+  // fetch Data for the game list
   fetchData = () => {
     console.log('Fetching data');
     this.getToken().then(() => {
@@ -70,11 +70,13 @@ export default class Dashboard extends Component {
     });
   };
 
+  // retrieve user token
   getToken = async () => {
     const token = await AsyncStorage.getItem('token');
     this.setState({ token: token });
   };
 
+  // refresh game list
   _onRefresh() {
     this.setState({ refreshing: true });
     this.fetchData();
@@ -138,10 +140,6 @@ export default class Dashboard extends Component {
             }
           >
             {items}
-            <GameModal
-              ref={modal => (this.GameModal = modal)}
-              parentComponent={this}
-            />
           </ScrollView>
         )}
         <GameModal

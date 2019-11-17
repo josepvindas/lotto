@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
+import { Header } from 'react-native-elements';
 import {
   AsyncStorage,
   Image,
-  View,
+  KeyboardAvoidingView,
   Text,
   TextInput,
-  ToastAndroid,
-  KeyboardAvoidingView
+  View
 } from 'react-native';
-import { Header } from 'react-native-elements';
-import { Icon, Button } from 'native-base';
+import { Button, Icon } from 'native-base';
 
-import Styles from '../config/Styles';
 import Strings from '../config/Strings';
+import Styles from '../config/Styles';
 
 export default class Login extends Component {
   static navigationOptions = {
@@ -42,7 +41,7 @@ export default class Login extends Component {
     }
   };
 
-  // Signup the user
+  // Login the user
   login = () => {
     const uri = 'https://lotto-back.herokuapp.com' + '/auth/local';
     return fetch(uri, {
@@ -60,13 +59,7 @@ export default class Login extends Component {
       .then(responseJson => {
         if (responseJson.error) {
           console.log('Error');
-          ToastAndroid.showWithGravityAndOffset(
-            Strings.credential_error,
-            ToastAndroid.LONG,
-            ToastAndroid.TOP,
-            25,
-            50
-          );
+          alert(Strings.credential_error);
         } else {
           const token = responseJson.jwt;
           this._storeData(token, JSON.stringify(responseJson.user)).then(() => {
@@ -79,6 +72,8 @@ export default class Login extends Component {
         console.log(err);
       });
   };
+
+  // Render login screen
   render() {
     return (
       <>

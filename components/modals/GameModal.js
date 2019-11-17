@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import { Text, TextInput, AsyncStorage, View } from 'react-native';
-import Modal from 'react-native-modalbox';
-import ActionButton from 'react-native-action-button';
 import { Icon } from 'native-base';
+import { AsyncStorage, Text, TextInput, View } from 'react-native';
+import ActionButton from 'react-native-action-button';
+import Modal from 'react-native-modalbox';
+import React, { Component } from 'react';
 
-import Styles from '../config/Styles';
 import Colors from '../config/Colors';
 import Strings from '../config/Strings';
+import Styles from '../config/Styles';
 
 export default class GameModal extends Component {
   // Constructor fot the modal
@@ -16,8 +16,8 @@ export default class GameModal extends Component {
     this.state = {
       amount: '',
       number: '',
-      user: {},
-      show: false
+      show: false,
+      user: {}
     };
   }
 
@@ -27,7 +27,7 @@ export default class GameModal extends Component {
     this.myModal.open();
   };
 
-  //Get username for requests
+  // Retrieve current user from Async storage
   getUser = async () => {
     const temp = await AsyncStorage.getItem('user');
     console.log(temp);
@@ -36,9 +36,10 @@ export default class GameModal extends Component {
     this.setState({ user });
   };
 
-  // Save transaction
+  // Save Transaction to database
   transaction = () => {
     this.getUser().then(() => {
+      // Get current DateTime and format to match backend
       var today = new Date();
       var date =
         today.getFullYear() +
@@ -55,24 +56,32 @@ export default class GameModal extends Component {
         '.' +
         today.getMilliseconds();
       var curr = date + 'T' + time + 'Z';
+
+      // Verify amount is not higher than the max play value.
       if (
         parseInt(this.state.amount, 10) >
         this.props.parentComponent.state.current_game.max_play
       ) {
-        alert('Apuesta excede el limite');
+        alert(Strings.max_play_alert);
         return;
       }
+
+      // Verify amount is not higher than user credit
       if (parseInt(this.state.amount, 10) > this.state.user.credit) {
-        alert('Apuesta excede credito');
+        alert(Strings.user_credit_alert);
         return;
       }
+
+      // Verify number is valid
       if (
         parseInt(this.state.number, 10) < 1 ||
         parseInt(this.state.number, 10) > 100
       ) {
-        alert('Apuesta excede credito');
+        alert(Strings.invalid_number_alert);
         return;
       }
+
+      // Save transaction to database
       const uri = 'https://lotto-back.herokuapp.com' + '/transactions';
       return fetch(uri, {
         method: 'POST',
@@ -140,6 +149,7 @@ export default class GameModal extends Component {
             console.log(responseJson);
           } else {
             this._storeData(JSON.stringify(responseJson)).then(() => {
+              this.setState({ show: false });
               this.myModal.close();
             });
           }

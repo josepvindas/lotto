@@ -26,7 +26,10 @@ const Strings = {
     'Lo sentimos, la cédula o contraseña que ha ingresado, es incorrecta',
   mismatch_error: 'La contraseña y la confirmación, deben de ser iguales',
   amount_placeholder: 'Monto a comprar',
-  number_placeholder: 'Número (1 - 100)'
+  number_placeholder: 'Número (1 - 100)',
+  max_play_alert: 'La apuesta no puede exceder el limite impuesto por el juego',
+  user_credit_alert: 'La apuesta excede su crédito actual',
+  invalid_number_alert: 'El número ingresado es invalido'
 };
 
 export default Strings;
