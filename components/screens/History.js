@@ -14,7 +14,7 @@ export default class History extends Component {
       <>
         <Header
           centerComponent={{
-            text: Strings.signup_title,
+            text: Strings.history_title,
             style: Styles.title_intro
           }}
           containerStyle={Styles.header}

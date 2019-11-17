@@ -6,6 +6,7 @@ import { Icon } from 'native-base';
 
 import Styles from '../config/Styles';
 import Colors from '../config/Colors';
+import Strings from '../config/Strings';
 
 export default class GameModal extends Component {
   // Constructor fot the modal
@@ -14,10 +15,8 @@ export default class GameModal extends Component {
 
     this.state = {
       amount: '',
-      user: null,
-      username: '',
-      token: '',
-      game: null,
+      number: '',
+      user: {},
       show: false
     };
   }
@@ -28,35 +27,77 @@ export default class GameModal extends Component {
     this.myModal.open();
   };
 
-  // Get current user
-  getUser = () => {
-    this.getToken().then(() => {
-      const uri =
-        'https://lotto-back.herokuapp.com' +
-        '/users?username=' +
-        this.state.username;
+  //Get username for requests
+  getUser = async () => {
+    const temp = await AsyncStorage.getItem('user');
+    console.log(temp);
+    const user = JSON.parse(temp);
+    console.log(user);
+    this.setState({ user });
+  };
+
+  // Save transaction
+  transaction = () => {
+    this.getUser().then(() => {
+      var today = new Date();
+      var date =
+        today.getFullYear() +
+        '-' +
+        (today.getMonth() + 1) +
+        '-' +
+        today.getDate();
+      var time =
+        today.getHours() +
+        ':' +
+        today.getMinutes() +
+        ':' +
+        today.getSeconds() +
+        '.' +
+        today.getMilliseconds();
+      var curr = date + 'T' + time + 'Z';
+      if (
+        parseInt(this.state.amount, 10) >
+        this.props.parentComponent.state.current_game.max_play
+      ) {
+        alert('Apuesta excede el limite');
+        return;
+      }
+      if (parseInt(this.state.amount, 10) > this.state.user.credit) {
+        alert('Apuesta excede credito');
+        return;
+      }
+      if (
+        parseInt(this.state.number, 10) < 1 ||
+        parseInt(this.state.number, 10) > 100
+      ) {
+        alert('Apuesta excede credito');
+        return;
+      }
+      const uri = 'https://lotto-back.herokuapp.com' + '/transactions';
       return fetch(uri, {
-        method: 'GET',
+        method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + this.state.token
-        }
+          Authorization: 'Bearer ' + this.props.parentComponent.state.token
+        },
+        body: JSON.stringify({
+          value: parseInt(this.state.amount, 10),
+          number: parseInt(this.state.number, 10),
+          type: 1,
+          date: curr,
+          user: this.state.user.id,
+          game: this.props.parentComponent.state.current_game.id
+        })
       })
         .then(response => response.json())
         .then(responseJson => {
           if (responseJson.error) {
             console.log('Error');
-            ToastAndroid.showWithGravityAndOffset(
-              Strings.credential_error,
-              ToastAndroid.LONG,
-              ToastAndroid.TOP,
-              25,
-              50
-            );
           } else {
-            console.log(responseJson);
-            this.setState({ user: responseJson });
+            const deduction =
+              this.state.user.credit - parseInt(this.state.amount, 10);
+            this.saveCredit(deduction);
           }
         })
         .catch(err => {
@@ -66,22 +107,48 @@ export default class GameModal extends Component {
     });
   };
 
-  // Save transaction
-  transaction = () => {};
-
-  // Deduct user Credit
-  saveCredit = amount => {};
-
-  //Get security token for requests
-  getToken = async () => {
-    const token = await AsyncStorage.getItem('token');
-    this.setState({ token: token });
+  // Save data to local storage
+  _storeData = async user => {
+    try {
+      await AsyncStorage.setItem('user', user);
+    } catch (error) {
+      console.log('Error' + error);
+    }
   };
 
-  //Get username for requests
-  getUsername = async () => {
-    const username = await AsyncStorage.getItem('username');
-    this.setState({ username: username });
+  // Deduct user Credit
+  saveCredit = amount => {
+    this.getUser().then(() => {
+      const uri =
+        'https://lotto-back.herokuapp.com' + '/users/' + this.state.user.id;
+      return fetch(uri, {
+        method: 'PUT',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + this.props.parentComponent.state.token
+        },
+        body: JSON.stringify({
+          credit: amount
+        })
+      })
+        .then(response => response.json())
+        .then(responseJson => {
+          if (responseJson.error) {
+            console.log('Error');
+            console.log(uri);
+            console.log(responseJson);
+          } else {
+            this._storeData(JSON.stringify(responseJson)).then(() => {
+              this.myModal.close();
+            });
+          }
+        })
+        .catch(err => {
+          console.log('error');
+          console.log(err);
+        });
+    });
   };
 
   // Render modal contents
@@ -142,9 +209,30 @@ export default class GameModal extends Component {
           ''
         )}
         <TextInput
+          placeholder={Strings.number_placeholder}
+          placeholderTextColor='rgba(0,0,0,0.7)'
           style={Styles.modal_input}
-          onChangeText={text => this.setState({ amount: text })}
-          placeholder='Model Number'
+          onSubmitEditing={() => this.amountInput.focus()}
+          autoCapitalize='none'
+          autoCorrect={false}
+          keyboardType='numeric'
+          ref={el => {
+            this.numberInput = el;
+          }}
+          onChangeText={number => this.setState({ number })}
+          value={this.state.number}
+        />
+        <TextInput
+          placeholder={Strings.amount_placeholder}
+          placeholderTextColor='rgba(0,0,0,0.7)'
+          style={Styles.modal_input}
+          autoCapitalize='none'
+          autoCorrect={false}
+          keyboardType='numeric'
+          ref={el => {
+            this.amountInput = el;
+          }}
+          onChangeText={amount => this.setState({ amount })}
           value={this.state.amount}
         />
         <ActionButton
@@ -162,7 +250,7 @@ export default class GameModal extends Component {
           position='right'
           icon={<Icon name='md-checkmark' style={Styles.modal_button} />}
           onPress={() => {
-            this.myModal.close();
+            this.transaction();
           }}
         ></ActionButton>
       </Modal>

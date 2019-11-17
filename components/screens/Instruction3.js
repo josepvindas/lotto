@@ -12,9 +12,19 @@ export default class Instruction3 extends Component {
     header: null
   };
 
-  endTutorial = async () => {
-    await AsyncStorage.setItem('firstTime', 'no');
-    this.props.navigation.navigate('Auth');
+  // Save data to local storage
+  _storeData = async () => {
+    try {
+      await AsyncStorage.setItem('firstTime', 'no');
+    } catch (error) {
+      console.log('Error' + error);
+    }
+  };
+
+  endTutorial = () => {
+    this._storeData().then(() => {
+      this.props.navigation.navigate('Auth');
+    });
   };
 
   render() {

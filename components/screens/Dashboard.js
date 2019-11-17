@@ -33,12 +33,6 @@ export default class Dashboard extends Component {
     };
   }
 
-  wait(timeout) {
-    return new Promise(resolve => {
-      setTimeout(resolve, timeout);
-    });
-  }
-
   fetchData = () => {
     console.log('Fetching data');
     this.getToken().then(() => {
@@ -117,11 +111,6 @@ export default class Dashboard extends Component {
               ':' +
               game.date.split('T')[1].split(':')[1]}{' '}
           </Text>
-
-          <Text style={Styles.card_play}>
-            {' '}
-            {'Apuesta Maxima: ' + game.max_play}{' '}
-          </Text>
         </TouchableOpacity>
       </View>
     ));
@@ -130,7 +119,7 @@ export default class Dashboard extends Component {
       <>
         <Header
           centerComponent={{
-            text: Strings.signup_title,
+            text: Strings.dashboard_title,
             style: Styles.title_intro
           }}
           containerStyle={Styles.header}
@@ -155,6 +144,10 @@ export default class Dashboard extends Component {
             />
           </ScrollView>
         )}
+        <GameModal
+          ref={modal => (this.GameModal = modal)}
+          parentComponent={this}
+        />
       </>
     );
   }

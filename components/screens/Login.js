@@ -29,12 +29,14 @@ export default class Login extends Component {
   }
 
   // Save data to local storage
-  _storeData = async token => {
+  _storeData = async (token, user) => {
     try {
+      console.log(user);
       await AsyncStorage.setItem('username', this.state.username);
       console.log('Saved username to local storage: ' + this.state.username);
       await AsyncStorage.setItem('token', token);
       console.log('Saved jwt token to local storage: ' + token);
+      await AsyncStorage.setItem('user', user);
     } catch (error) {
       console.log('Error' + error);
     }
@@ -67,7 +69,7 @@ export default class Login extends Component {
           );
         } else {
           const token = responseJson.jwt;
-          this._storeData(token).then(() => {
+          this._storeData(token, JSON.stringify(responseJson.user)).then(() => {
             this.props.navigation.navigate('App');
           });
         }
@@ -107,7 +109,7 @@ export default class Login extends Component {
               placeholder={Strings.username_placeholder}
               placeholderTextColor='rgba(0,0,0,0.7)'
               style={Styles.input}
-              onSubmitEditing={() => this.emailInput.focus()}
+              onSubmitEditing={() => this.passwordInput.focus()}
               autoCapitalize='none'
               autoCorrect={false}
               ref={el => {

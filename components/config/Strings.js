@@ -16,13 +16,17 @@ const Strings = {
   login_title: 'Iniciar Sesión',
   signup_title: 'Crear Cuenta',
   history_title: 'Historial',
+  user_title: 'Perfil',
+  dashboard_title: 'Dashboard',
   username_placeholder: 'Cédula',
   password_placeholder: 'Contraseña',
   confirm_placeholder: 'Confirmar contraseña',
   name_placeholder: 'Nombre y Apellidos',
   credential_error:
     'Lo sentimos, la cédula o contraseña que ha ingresado, es incorrecta',
-  mismatch_error: 'La contraseña y la confirmación, deben de ser iguales'
+  mismatch_error: 'La contraseña y la confirmación, deben de ser iguales',
+  amount_placeholder: 'Monto a comprar',
+  number_placeholder: 'Número (1 - 100)'
 };
 
 export default Strings;

@@ -125,7 +125,7 @@ export default Styles = StyleSheet.create({
   modal: {
     justifyContent: 'flex-start',
     borderRadius: 25,
-    height: Math.round(Dimensions.get('window').height) * 0.5,
+    height: Math.round(Dimensions.get('window').width) * 1.1,
     shadowRadius: 10,
     width: Math.round(Dimensions.get('window').width) * 0.85
   },
