@@ -149,7 +149,6 @@ export default class GameModal extends Component {
             console.log(responseJson);
           } else {
             this._storeData(JSON.stringify(responseJson)).then(() => {
-              this.setState({ show: false });
               this.myModal.close();
             });
           }

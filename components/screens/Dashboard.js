@@ -90,7 +90,7 @@ export default class Dashboard extends Component {
 
   render() {
     const items = this.state.game_list.map(game => (
-      <View style={Styles.card}>
+      <View style={Styles.card} key={game.id}>
         <TouchableOpacity
           onPress={() => {
             this.setState({ current_game: game });

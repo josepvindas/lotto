@@ -8,14 +8,6 @@ import History from '../screens/History';
 
 export default createMaterialBottomTabNavigator(
   {
-    History: {
-      screen: History,
-      navigationOptions: {
-        tabBarIcon: ({ tintColor }) => (
-          <Icon name='md-bookmarks' style={{ color: tintColor }} />
-        )
-      }
-    },
     Home: {
       screen: Dashboard,
       navigationOptions: {

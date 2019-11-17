@@ -9,6 +9,31 @@ export default Styles = StyleSheet.create({
     height: 22
   },
 
+  body: {
+    padding: 10,
+    alignItems: 'flex-start',
+    width: Math.round(Dimensions.get('window').width),
+    marginBottom: 50
+  },
+
+  body_title: {
+    color: Colors.primary_dark,
+    fontSize: 20,
+    marginBottom: 3
+  },
+
+  body_username: {
+    color: Colors.light_gray,
+    fontSize: 12,
+    marginBottom: 15
+  },
+
+  body_text: {
+    color: Colors.primary_dark,
+    fontSize: 15,
+    marginBottom: 5
+  },
+
   button: {
     backgroundColor: Colors.primary,
     borderRadius: 6,
@@ -187,6 +212,64 @@ export default Styles = StyleSheet.create({
     marginBottom: 15,
     marginTop: 25
   },
+
+  transaction_deduction: {
+    flex: 1,
+    flexGrow: 1,
+    backgroundColor: Colors.danger,
+    borderRadius: 15,
+    justifyContent: 'center',
+    width: Math.round(Dimensions.get('window').width) * 0.95,
+    margin: 5,
+    padding: 10
+  },
+
+  transaction_earning: {
+    flex: 1,
+    flexGrow: 1,
+    backgroundColor: Colors.success,
+    borderRadius: 15,
+    justifyContent: 'center',
+    width: Math.round(Dimensions.get('window').width) * 0.95,
+    margin: 5,
+    padding: 10
+  },
+
+  transaction_prize: {
+    flex: 1,
+    flexGrow: 1,
+    backgroundColor: Colors.congratulations,
+    borderRadius: 15,
+    justifyContent: 'center',
+    width: Math.round(Dimensions.get('window').width) * 0.95,
+    margin: 5,
+    padding: 10
+  },
+
+  transaction_amount: {
+    color: Colors.primary_light,
+    fontSize: 20,
+    position: 'absolute',
+    right: 13
+  },
+
+  transaction_date: {
+    color: Colors.primary_light,
+    fontSize: 20
+  },
+
+  transaction_identifier: {
+    color: Colors.primary_light,
+    marginLeft: 5,
+    fontSize: 12
+  },
+
+  transaction_type: {
+    color: Colors.primary_light,
+    marginLeft: 5,
+    fontSize: 15
+  },
+
   scroll: {
     width: Math.round(Dimensions.get('window').width),
     alignItems: 'center'
