@@ -57,12 +57,14 @@ export default Styles = StyleSheet.create({
     flex: 1,
     flexGrow: 1,
     backgroundColor: Colors.primary_light,
-    borderColor: Colors.primary,
     borderRadius: 15,
-    borderWidth: 1,
     width: Math.round(Dimensions.get('window').width) * 0.95,
     margin: 5,
-    padding: 10
+    padding: 10,
+    shadowColor: Colors.primary_dark,
+    shadowOpacity: 0.8,
+    shadowRadius: 15,
+    elevation: 10
   },
 
   card_title: {
@@ -155,6 +157,14 @@ export default Styles = StyleSheet.create({
     width: Math.round(Dimensions.get('window').width) * 0.85
   },
 
+  modal_logout: {
+    justifyContent: 'flex-start',
+    borderRadius: 25,
+    height: Math.round(Dimensions.get('window').width) * 0.85,
+    shadowRadius: 10,
+    width: Math.round(Dimensions.get('window').width) * 0.85
+  },
+
   modal_body: {
     margin: 20
   },
@@ -213,59 +223,55 @@ export default Styles = StyleSheet.create({
     marginTop: 25
   },
 
-  transaction_deduction: {
+  transaction: {
     flex: 1,
     flexGrow: 1,
-    backgroundColor: Colors.danger,
+    backgroundColor: Colors.primary_light,
     borderRadius: 15,
     justifyContent: 'center',
     width: Math.round(Dimensions.get('window').width) * 0.95,
     margin: 5,
-    padding: 10
-  },
-
-  transaction_earning: {
-    flex: 1,
-    flexGrow: 1,
-    backgroundColor: Colors.success,
-    borderRadius: 15,
-    justifyContent: 'center',
-    width: Math.round(Dimensions.get('window').width) * 0.95,
-    margin: 5,
-    padding: 10
+    padding: 10,
+    shadowColor: Colors.primary_dark,
+    shadowOpacity: 0.8,
+    shadowRadius: 15,
+    elevation: 10
   },
 
   transaction_prize: {
-    flex: 1,
-    flexGrow: 1,
-    backgroundColor: Colors.congratulations,
-    borderRadius: 15,
-    justifyContent: 'center',
-    width: Math.round(Dimensions.get('window').width) * 0.95,
-    margin: 5,
-    padding: 10
+    color: Colors.congratulations,
+    fontSize: 20,
+    position: 'absolute',
+    right: 13
   },
 
-  transaction_amount: {
-    color: Colors.primary_light,
+  transaction_earning: {
+    color: Colors.success,
+    fontSize: 20,
+    position: 'absolute',
+    right: 13
+  },
+
+  transaction_expense: {
+    color: Colors.danger,
     fontSize: 20,
     position: 'absolute',
     right: 13
   },
 
   transaction_date: {
-    color: Colors.primary_light,
+    color: Colors.primary,
     fontSize: 20
   },
 
   transaction_identifier: {
-    color: Colors.primary_light,
+    color: Colors.primary_dark,
     marginLeft: 5,
     fontSize: 12
   },
 
   transaction_type: {
-    color: Colors.primary_light,
+    color: Colors.primary_dark,
     marginLeft: 5,
     fontSize: 15
   },

@@ -11,6 +11,7 @@ import {
 import { Header } from 'react-native-elements';
 import { Button } from 'native-base';
 
+import LogoutModal from '../modals/LogoutModal';
 import Strings from '../config/Strings';
 import Styles from '../config/Styles';
 
@@ -31,7 +32,9 @@ export default class Settings extends Component {
     };
   }
 
-  logout = () => {};
+  logout = () => {
+    this.LogoutModal.show();
+  };
 
   // Retrieve current user from Async storage
   getUser = async () => {
@@ -98,16 +101,7 @@ export default class Settings extends Component {
   }
   render() {
     const items = this.state.transactions.reverse().map(transaction => (
-      <View
-        style={
-          transaction.type == 1
-            ? Styles.transaction_deduction
-            : transaction.type == 2
-            ? Styles.transaction_earning
-            : Styles.transaction_prize
-        }
-        key={transaction.id}
-      >
+      <View style={Styles.transaction} key={transaction.id}>
         <Text style={Styles.transaction_date}>
           {' '}
           {transaction.date.split('T')[0].split('-')[2] +
@@ -126,7 +120,15 @@ export default class Settings extends Component {
         <Text style={Styles.transaction_identifier}>
           {transaction.type == 2 ? transaction.location.name : ''}
         </Text>
-        <Text style={Styles.transaction_amount}>
+        <Text
+          style={
+            transaction.type == 1
+              ? Styles.transaction_expense
+              : transaction.type == 2
+              ? Styles.transaction_earning
+              : Styles.transaction_prize
+          }
+        >
           {transaction.type == 1
             ? '-' + transaction.value
             : '+' + transaction.value}
@@ -167,9 +169,14 @@ export default class Settings extends Component {
             >
               {items}
             </ScrollView>
-            <Button style={Styles.button} onPress={() => this.login()}>
-              <Text style={Styles.button_text}> {Strings.login_title} </Text>
+            <Button style={Styles.button} onPress={() => this.logout()}>
+              <Text style={Styles.button_text}> {Strings.logout_title} </Text>
             </Button>
+
+            <LogoutModal
+              ref={modal => (this.LogoutModal = modal)}
+              parentComponent={this}
+            />
           </View>
         )}
       </>

@@ -14,6 +14,8 @@ const Strings = {
   instruction_3_title: '¡Listo!',
   instruction_3_message: '¡Empieza a jugar y ganar dinero ahora!',
   login_title: 'Iniciar Sesión',
+  logout_title: 'Cerrar Sesión',
+  logout_message: '¿Está seguro que desea cerrar sesión?',
   signup_title: 'Crear Cuenta',
   history_title: 'Historial',
   user_title: 'Perfil',
