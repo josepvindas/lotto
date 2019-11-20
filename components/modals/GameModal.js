@@ -23,6 +23,8 @@ export default class GameModal extends Component {
 
   // Show the modal on screen
   show = () => {
+    this.setState({ amount: '' });
+    this.setState({ number: '' });
     this.myModal.open();
   };
 

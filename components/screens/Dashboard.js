@@ -10,10 +10,14 @@ import {
   View
 } from 'react-native';
 import { Header } from 'react-native-elements';
+import ActionButton from 'react-native-action-button';
+import { Icon } from 'native-base';
 
 import GameModal from '../modals/GameModal';
+import LogoutModal from '../modals/LogoutModal';
 import Strings from '../config/Strings';
 import Styles from '../config/Styles';
+import Colors from '../config/Colors';
 
 export default class Dashboard extends Component {
   static navigationOptions = {
@@ -152,6 +156,33 @@ export default class Dashboard extends Component {
               ref={modal => (this.GameModal = modal)}
               parentComponent={this}
             />
+            <LogoutModal
+              ref={modal => (this.LogoutModal = modal)}
+              parentComponent={this}
+            />
+            <ActionButton
+              buttonColor={Colors.primary}
+              buttonTextStyle={Styles.title}
+              position='right'
+              icon={<Icon name='md-cog' style={Styles.modal_button} />}
+            >
+              <ActionButton.Item
+                buttonColor={Colors.light_button}
+                title={Strings.logout_title}
+                onPress={() => this.LogoutModal.show()}
+              >
+                <Icon name='md-exit' style={Styles.modal_button} />
+              </ActionButton.Item>
+              <ActionButton.Item
+                buttonColor={Colors.light_button}
+                title={Strings.user_title}
+                onPress={() => {
+                  this.props.navigation.navigate('Profile');
+                }}
+              >
+                <Icon name='md-person' style={Styles.modal_button} />
+              </ActionButton.Item>
+            </ActionButton>
           </>
         )}
       </>

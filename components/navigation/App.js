@@ -1,35 +1,19 @@
 import React from 'react';
-import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
-import { Icon } from 'native-base';
+import { createStackNavigator } from 'react-navigation-stack';
 
 import Dashboard from '../screens/Dashboard';
 import User from '../screens/User';
-import History from '../screens/History';
 
-export default createMaterialBottomTabNavigator(
+export default createStackNavigator(
   {
     Home: {
-      screen: Dashboard,
-      navigationOptions: {
-        tabBarIcon: ({ tintColor }) => (
-          <Icon name='md-home' style={{ color: tintColor }} />
-        )
-      }
+      screen: Dashboard
     },
-    Settings: {
-      screen: User,
-      navigationOptions: {
-        tabBarIcon: ({ tintColor }) => (
-          <Icon name='md-person' style={{ color: tintColor }} />
-        )
-      }
+    Profile: {
+      screen: User
     }
   },
   {
-    initialRouteName: 'Home',
-    activeColor: '#fff2f2',
-    labeled: false,
-    inactiveColor: '#700000',
-    barStyle: { backgroundColor: '#FE0000', height: 45 }
+    initialRouteName: 'Home'
   }
 );
