@@ -23,7 +23,6 @@ export default class GameModal extends Component {
 
   // Show the modal on screen
   show = () => {
-    this.setState({ show: true });
     this.myModal.open();
   };
 
@@ -169,54 +168,50 @@ export default class GameModal extends Component {
         position='center'
         backdrop={true}
       >
-        {this.state.show ? (
-          <View style={Styles.modal_body}>
-            <Text style={Styles.modal_title}>
-              {' '}
-              {this.props.parentComponent.state.current_game.category.name}{' '}
-            </Text>
-            <Text style={Styles.modal_text}>
-              {' '}
-              {'Ubicacion: ' +
-                this.props.parentComponent.state.current_game.location
-                  .name}{' '}
-            </Text>
-            <Text style={Styles.modal_text}>
-              {' '}
-              {'Fecha: ' +
-                this.props.parentComponent.state.current_game.date
-                  .split('T')[0]
-                  .split('-')[2] +
-                '/' +
-                this.props.parentComponent.state.current_game.date
-                  .split('T')[0]
-                  .split('-')[1] +
-                '/' +
-                this.props.parentComponent.state.current_game.date
-                  .split('T')[0]
-                  .split('-')[0]}{' '}
-            </Text>
-            <Text style={Styles.modal_text}>
-              {' '}
-              {'Hora: ' +
-                this.props.parentComponent.state.current_game.date
-                  .split('T')[1]
-                  .split(':')[0] +
-                ':' +
-                this.props.parentComponent.state.current_game.date
-                  .split('T')[1]
-                  .split(':')[1]}{' '}
-            </Text>
+        <View style={Styles.modal_body}>
+          <Text style={Styles.modal_title}>
+            {' '}
+            {this.props.parentComponent.state.current_game.category.name}{' '}
+          </Text>
+          <Text style={Styles.modal_text}>
+            {' '}
+            {'Ubicacion: ' +
+              this.props.parentComponent.state.current_game.location.name}{' '}
+          </Text>
+          <Text style={Styles.modal_text}>
+            {' '}
+            {'Fecha: ' +
+              this.props.parentComponent.state.current_game.date
+                .split('T')[0]
+                .split('-')[2] +
+              '/' +
+              this.props.parentComponent.state.current_game.date
+                .split('T')[0]
+                .split('-')[1] +
+              '/' +
+              this.props.parentComponent.state.current_game.date
+                .split('T')[0]
+                .split('-')[0]}{' '}
+          </Text>
+          <Text style={Styles.modal_text}>
+            {' '}
+            {'Hora: ' +
+              this.props.parentComponent.state.current_game.date
+                .split('T')[1]
+                .split(':')[0] +
+              ':' +
+              this.props.parentComponent.state.current_game.date
+                .split('T')[1]
+                .split(':')[1]}{' '}
+          </Text>
 
-            <Text style={Styles.modal_text}>
-              {' '}
-              {'Apuesta Maxima: ' +
-                this.props.parentComponent.state.current_game.max_play}{' '}
-            </Text>
-          </View>
-        ) : (
-          ''
-        )}
+          <Text style={Styles.modal_text}>
+            {' '}
+            {'Apuesta Maxima: ' +
+              this.props.parentComponent.state.current_game.max_play}{' '}
+          </Text>
+        </View>
+
         <TextInput
           placeholder={Strings.number_placeholder}
           placeholderTextColor='rgba(0,0,0,0.7)'

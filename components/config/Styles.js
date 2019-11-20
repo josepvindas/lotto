@@ -158,9 +158,9 @@ export default Styles = StyleSheet.create({
   },
 
   modal_logout: {
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     borderRadius: 25,
-    height: Math.round(Dimensions.get('window').width) * 0.85,
+    height: Math.round(Dimensions.get('window').width) * 0.6,
     shadowRadius: 10,
     width: Math.round(Dimensions.get('window').width) * 0.85
   },
@@ -184,6 +184,13 @@ export default Styles = StyleSheet.create({
     width: Math.round(Dimensions.get('window').width) * 0.85 * 0.9,
     marginBottom: 10,
     paddingHorizontal: 10
+  },
+
+  modal_text_logout: {
+    color: Colors.primary_dark,
+    fontSize: 18,
+    marginBottom: Math.round(Dimensions.get('window').width) * 0.6 * 0.5,
+    textAlign: 'center'
   },
 
   modal_text: {

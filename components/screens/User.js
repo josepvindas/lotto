@@ -3,13 +3,12 @@ import {
   ActivityIndicator,
   AsyncStorage,
   RefreshControl,
-  FlatList,
   ScrollView,
   Text,
   View
 } from 'react-native';
+import { Icon } from 'native-base';
 import { Header } from 'react-native-elements';
-import { Button } from 'native-base';
 
 import LogoutModal from '../modals/LogoutModal';
 import Strings from '../config/Strings';
@@ -41,16 +40,42 @@ export default class Settings extends Component {
     const temp = await AsyncStorage.getItem('user');
     console.log(temp);
     const user = JSON.parse(temp);
-    console.log(user);
-    this.setState({ user });
+    this.getToken().then(() => {
+      this.fetchUser(user.id);
+    });
+  };
+
+  fetchUser = id => {
+    const uri = 'https://lotto-back.herokuapp.com' + '/users/' + id;
+    return fetch(uri, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.state.token
+      }
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        if (responseJson.error) {
+          console.log('Error');
+          console.log(uri);
+          console.log(responseJson);
+        } else {
+          this.setState({ user: responseJson });
+          this.fetchData();
+        }
+      })
+      .catch(err => {
+        console.log('error');
+        console.log(err);
+      });
   };
 
   // refresh transaction list
   _onRefresh() {
     this.setState({ refreshing: true });
-    this.getUser().then(() => {
-      this.fetchData();
-    });
+    this.getUser();
   }
 
   // retrieve user token
@@ -62,42 +87,39 @@ export default class Settings extends Component {
   // fetch Data for the transaction list
   fetchData = () => {
     console.log('Fetching data');
-    this.getToken().then(() => {
-      const uri =
-        'https://lotto-back.herokuapp.com' +
-        '/transactions?user.username=' +
-        this.state.user.username;
-      console.log('The token is: ' + this.state.token);
-      return fetch(uri, {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + this.state.token
+
+    const uri =
+      'https://lotto-back.herokuapp.com' +
+      '/transactions?user.username=' +
+      this.state.user.username;
+    console.log('The token is: ' + this.state.token);
+    return fetch(uri, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.state.token
+      }
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        if (responseJson.error) {
+          console.log('Error');
+        } else {
+          console.log(responseJson);
+          this.setState({ transactions: responseJson });
+          this.setState({ loading: false });
+          this.setState({ refreshing: false });
         }
       })
-        .then(response => response.json())
-        .then(responseJson => {
-          if (responseJson.error) {
-            console.log('Error');
-          } else {
-            console.log(responseJson);
-            this.setState({ transactions: responseJson });
-            this.setState({ loading: false });
-            this.setState({ refreshing: false });
-          }
-        })
-        .catch(err => {
-          console.log('error');
-          console.log(err);
-        });
-    });
+      .catch(err => {
+        console.log('error');
+        console.log(err);
+      });
   };
 
   componentDidMount() {
-    this.getUser().then(() => {
-      this.fetchData();
-    });
+    this.getUser();
   }
   render() {
     const items = this.state.transactions.reverse().map(transaction => (
@@ -118,7 +140,11 @@ export default class Settings extends Component {
             : 'Premio'}
         </Text>
         <Text style={Styles.transaction_identifier}>
-          {transaction.type == 2 ? transaction.location.name : ''}
+          {transaction.type == 2
+            ? transaction.location.name
+            : transaction.type == 1
+            ? transaction.number
+            : ''}
         </Text>
         <Text
           style={
@@ -142,6 +168,15 @@ export default class Settings extends Component {
             text: Strings.user_title,
             style: Styles.title_intro
           }}
+          rightComponent={
+            <Icon
+              name='md-exit'
+              style={Styles.header_icon}
+              onPress={() => {
+                this.logout();
+              }}
+            />
+          }
           containerStyle={Styles.header}
         />
         {this.state.loading ? (
@@ -169,9 +204,6 @@ export default class Settings extends Component {
             >
               {items}
             </ScrollView>
-            <Button style={Styles.button} onPress={() => this.logout()}>
-              <Text style={Styles.button_text}> {Strings.logout_title} </Text>
-            </Button>
 
             <LogoutModal
               ref={modal => (this.LogoutModal = modal)}

@@ -61,6 +61,7 @@ export default class Dashboard extends Component {
             console.log(responseJson);
             this.setState({ game_list: responseJson });
             this.setState({ current_game: responseJson[0] });
+            this.setState({ loading: false });
           }
         })
         .catch(err => {
@@ -76,6 +77,11 @@ export default class Dashboard extends Component {
     this.setState({ token: token });
   };
 
+  setGame = async game => {
+    this.setState({ current_game: game });
+    console.log('Touched');
+  };
+
   // refresh game list
   _onRefresh() {
     this.setState({ refreshing: true });
@@ -85,7 +91,6 @@ export default class Dashboard extends Component {
 
   componentDidMount() {
     this.fetchData();
-    this.setState({ loading: false });
   }
 
   render() {
@@ -93,8 +98,9 @@ export default class Dashboard extends Component {
       <View style={Styles.card} key={game.id}>
         <TouchableOpacity
           onPress={() => {
-            this.setState({ current_game: game });
-            this.GameModal.show();
+            this.setGame(game).then(() => {
+              this.GameModal.show();
+            });
           }}
         >
           <Text style={Styles.card_title}> {game.category.name} </Text>
@@ -130,22 +136,24 @@ export default class Dashboard extends Component {
         {this.state.loading ? (
           <ActivityIndicator size='large' color='#FE0000' />
         ) : (
-          <ScrollView
-            contentContainerStyle={Styles.scroll}
-            refreshControl={
-              <RefreshControl
-                refreshing={this.state.refreshing}
-                onRefresh={this._onRefresh.bind(this)}
-              />
-            }
-          >
-            {items}
-          </ScrollView>
+          <>
+            <ScrollView
+              contentContainerStyle={Styles.scroll}
+              refreshControl={
+                <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={this._onRefresh.bind(this)}
+                />
+              }
+            >
+              {items}
+            </ScrollView>
+            <GameModal
+              ref={modal => (this.GameModal = modal)}
+              parentComponent={this}
+            />
+          </>
         )}
-        <GameModal
-          ref={modal => (this.GameModal = modal)}
-          parentComponent={this}
-        />
       </>
     );
   }

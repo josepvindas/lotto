@@ -66,7 +66,7 @@ export default class LogoutModal extends Component {
       >
         <View style={Styles.modal_body}>
           <Text style={Styles.modal_title}> {Strings.logout_title}</Text>
-          <Text style={Styles.modal_text}>{Strings.logout_message}</Text>
+          <Text style={Styles.modal_text_logout}>{Strings.logout_message}</Text>
         </View>
 
         <ActionButton
