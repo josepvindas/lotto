@@ -254,7 +254,11 @@ export default class GameModal extends Component {
           position='right'
           icon={<Icon name='md-checkmark' style={Styles.modal_button} />}
           onPress={() => {
-            this.transaction();
+            if (this.state.amount != '' && this.state.number != '') {
+              this.transaction();
+            } else {
+              alert('Los campos no pueden estar vacios');
+            }
           }}
         ></ActionButton>
       </Modal>

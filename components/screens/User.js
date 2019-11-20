@@ -63,6 +63,7 @@ export default class Settings extends Component {
           console.log(responseJson);
         } else {
           this.setState({ user: responseJson });
+          this._storeData(JSON.stringify(responseJson));
           this.fetchData();
         }
       })
@@ -82,6 +83,15 @@ export default class Settings extends Component {
   getToken = async () => {
     const token = await AsyncStorage.getItem('token');
     this.setState({ token: token });
+  };
+
+  // Save data to local storage
+  _storeData = async user => {
+    try {
+      await AsyncStorage.setItem('user', user);
+    } catch (error) {
+      console.log('Error' + error);
+    }
   };
 
   // fetch Data for the transaction list
