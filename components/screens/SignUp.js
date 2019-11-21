@@ -5,11 +5,10 @@ import {
   View,
   Text,
   TextInput,
-  ToastAndroid,
   KeyboardAvoidingView
 } from 'react-native';
 import { Header } from 'react-native-elements';
-import { Icon, Button } from 'native-base';
+import { Button } from 'native-base';
 
 import Styles from '../config/Styles';
 import Strings from '../config/Strings';

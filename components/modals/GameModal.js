@@ -1,5 +1,11 @@
 import { Icon } from 'native-base';
-import { AsyncStorage, Text, TextInput, View } from 'react-native';
+import {
+  AsyncStorage,
+  Text,
+  TextInput,
+  View,
+  ToastAndroid
+} from 'react-native';
 import ActionButton from 'react-native-action-button';
 import Modal from 'react-native-modalbox';
 import React, { Component } from 'react';
@@ -150,6 +156,13 @@ export default class GameModal extends Component {
             console.log(responseJson);
           } else {
             this._storeData(JSON.stringify(responseJson)).then(() => {
+              ToastAndroid.showWithGravityAndOffset(
+                Strings.purchase_notice,
+                ToastAndroid.LONG,
+                ToastAndroid.TOP,
+                25,
+                50
+              );
               this.myModal.close();
             });
           }

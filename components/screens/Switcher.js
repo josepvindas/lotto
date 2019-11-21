@@ -15,7 +15,7 @@ export default class Switcher extends React.Component {
     const userToken = await AsyncStorage.getItem('username');
     //const userToken = false;
 
-    if (isFirstTime === 'no') {
+    if (!isFirstTime) {
       this.props.navigation.navigate('Intro');
     } else {
       this.props.navigation.navigate(userToken ? 'App' : 'Auth');

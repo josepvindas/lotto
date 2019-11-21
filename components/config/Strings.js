@@ -31,7 +31,8 @@ const Strings = {
   number_placeholder: 'Número (1 - 100)',
   max_play_alert: 'La apuesta no puede exceder el limite impuesto por el juego',
   user_credit_alert: 'La apuesta excede su crédito actual',
-  invalid_number_alert: 'El número ingresado es invalido'
+  invalid_number_alert: 'El número ingresado es invalido',
+  purchase_notice: 'Pago realizado exitosamente'
 };
 
 export default Strings;

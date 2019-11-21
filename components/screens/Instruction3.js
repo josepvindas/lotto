@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, View, Text } from 'react-native';
+import { Image, View, Text, AsyncStorage } from 'react-native';
 import { Icon } from 'native-base';
 import ActionButton from 'react-native-action-button';
 
